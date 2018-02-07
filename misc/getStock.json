@@ -1,0 +1,9 @@
+{
+	"httpMethod": "GET",
+	"resource": "/stocks/1",
+	"queryStringParameters": {},
+	"pathParameters": {
+		"productId": "1"
+	},
+	"path": "/stocks/1"
+}

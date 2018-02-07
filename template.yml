@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'Stock demo'
+Resources:
+  ConsumedFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/event.productConsumed
+      Runtime: nodejs6.10
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          EVENT_TABLE: !Ref StockEventTable
+      Events:
+        ConsumeStockApi:
+          Type: Api
+          Properties:
+            Path: /consumed/{productId}
+            Method: post
+
+  ReceivedFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/event.productReceived
+      Runtime: nodejs6.10
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          EVENT_TABLE: !Ref StockEventTable
+      Events:
+        EntryStockApi:
+          Type: Api
+          Properties:
+            Path: /received/{productId}
+            Method: post
+
+  GetStockFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/stock.getStock
+      Runtime: nodejs6.10
+      Policies: AmazonDynamoDBReadOnlyAccess
+      Environment:
+        Variables:
+          MODEL_TABLE: !Ref StockReadModelTable
+      Events:
+        GetStockFunctionApi:
+          Type: Api
+          Properties:
+            Path: /{productId}
+            Method: get
+
+  StockEventListenerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/eventListener.listener
+      Runtime: nodejs6.10
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          MODEL_TABLE: !Ref StockReadModelTable
+      Events:
+        StockEventStream:
+          Type: DynamoDB
+          Properties:
+            Stream: !GetAtt StockEventTable.StreamArn
+            StartingPosition: TRIM_HORIZON
+            BatchSize: 1
+
+  StockEventTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - AttributeName: uuid
+          AttributeType: S
+      KeySchema: 
+        - AttributeName: uuid
+          KeyType: HASH
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
+        
+  StockReadModelTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: productId
+        Type: Number
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2

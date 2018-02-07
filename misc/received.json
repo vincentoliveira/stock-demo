@@ -1,0 +1,10 @@
+{
+	"httpMethod": "POST",
+	"body": "{\"quantity\":10}",
+	"resource": "/received/1",
+	"queryStringParameters": {},
+	"pathParameters": {
+		"productId": "1"
+	},
+	"path": "/received/1"
+}

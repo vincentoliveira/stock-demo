@@ -1,0 +1,13 @@
+{
+  "node": true,
+  "camelcase": true,
+  "indent": 2,
+  "eqeqeq": true,
+  "esversion": 6,
+  "latedef": true,
+  "newcap": true,
+  "quotmark": "single",
+  "strict": true,
+  "undef": true,
+  "unused": true
+}

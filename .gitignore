@@ -1,0 +1,3 @@
+output.yml
+*.db
+node_modules/

@@ -1,0 +1,14 @@
+{
+    "ConsumedFunction": {
+        "EVENT_TABLE": "StockEvent"
+    },
+    "ReceivedFunction": {
+        "EVENT_TABLE": "StockEvent"
+    },
+    "GetStockFunction": {
+        "MODEL_TABLE": "StockReadModel"
+    },
+    "StockEventListenerFunction": {
+        "MODEL_TABLE": "StockReadModel"
+    }
+}
