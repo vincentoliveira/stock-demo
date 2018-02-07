@@ -23,7 +23,7 @@ sam deploy --template-file output.yml --capabilities CAPABILITY_IAM --stack-name
 
 ```
 # Run once
-nohup java -Djava.library.path=<PATH_TO_DYNAMO_DB_LOCAL>/DynamoDBLocal_lib -jar <PATH_TO_DYNAMO_DB_LOCAL>/DynamoDBLocal.jar -sharedDb &
+nohup java -jar ~/tiller/dynamodb_local/DynamoDBLocal.jar --inMemory -sharedDb &
 
 # Create tables
 aws dynamodb create-table --table-name StockEvent  --attribute-definitions AttributeName=uuid,AttributeType=S --key-schema AttributeName=uuid,KeyType=HASH --provisioned-throughput ReadCapacityUnits=2,WriteCapacityUnits=2 --stream-specification StreamEnabled=true,StreamViewType=NEW_IMAGE --endpoint-url http://localhost:8000
