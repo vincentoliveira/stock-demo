@@ -7,8 +7,8 @@ let updateReadModel = (event) => {
     let productId = parseInt(event.productId.N);
     let quantity = parseInt(event.quantity.N);
     let type = event.type.S;
-    let entries = type === 'ProductReceived' ? quantity : 0;
-    let sales = type === 'ProductConsumed' ? quantity : 0;
+    let inQuantity = type === 'ProductReceived' ? quantity : 0;
+    let outQuantity = type === 'ProductConsumed' ? quantity : 0;
 
     Repository.getStockModel(productId, (err, item) => {
 
@@ -20,15 +20,16 @@ let updateReadModel = (event) => {
         if (!item) {
             item = {
                 productId: productId,
-                quantity: entries - sales,
-                entries: entries,
-                sales: sales,
+                quantity: inQuantity - outQuantity,
+                in: inQuantity,
+                out: outQuantity,
             };
         } else {
-            item.quantity += entries - sales;
-            item.entries += entries;
-            item.sales += sales;
+            item.quantity += inQuantity - outQuantity;
+            item.in += inQuantity;
+            item.out += outQuantity;
         }
+
 
         Repository.saveStockModel(item, (err, item) => {
             if (err) console.error(err);
@@ -37,7 +38,8 @@ let updateReadModel = (event) => {
 };
 
 exports.listener = (event, context, callback) => {
-    
+
+
     if (!event.Records) {
         return;
     }

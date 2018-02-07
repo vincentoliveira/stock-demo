@@ -43,5 +43,5 @@ aws dynamodbstreams --endpoint-url http://localhost:8000 get-records --shard-ite
 sam local invoke GetStockFunction --event misc/getStock.json --env-vars misc/local.json
 
 # Last line should look like this: 
-# {"statusCode":200,"body":"{\"entries\":10,\"quantity\":9,\"productId\":1,\"sales\":1}","headers":{"Content-Type":"application/json"}}
+# {"statusCode":200,"body":"{\"quantity\":9,\"productId\":1,\"in\":10,\"out\":1}","headers":{"Content-Type":"application/json"}}
 ```
