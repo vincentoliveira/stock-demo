@@ -22,12 +22,12 @@ let getQuantity = (lambdaEvent) => {
 /**
  * Generate and persist stock event. 
  */
-let generateStockEvent = (eventName, product, quantity, callback) => {
+let generateStockEvent = (eventName, productId, quantity, callback) => {
 
     let stockEvent = {
         uuid: uuidv4(),
-        date: new Date().toISOString(),
-        productId: product,
+        happenOn: new Date().toISOString(),
+        productId: productId,
         type: eventName,
         quantity: quantity
     };
