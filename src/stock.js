@@ -1,6 +1,6 @@
 'use strict';
 
-const Repository = require('./repository');
+const StockRepository = require('./StockRepository');
 
 /**
  * Product Consume Lambda Function
@@ -9,7 +9,7 @@ exports.getStock = (event, context, callback) => {
 
     let productId = parseInt(event.pathParameters.productId);
     
-    Repository.getStockModel(productId, (err, readModel) => {
+    StockRepository.getStock(productId, (err, readModel) => {
         if (err) callback(null, 500);
         else callback(null, {
             statusCode: 200,

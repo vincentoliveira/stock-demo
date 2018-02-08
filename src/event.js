@@ -1,7 +1,7 @@
 'use strict';
 
 const uuidv4 = require('uuid/v4');
-const Repository = require('./repository');
+const EventStore = require('./EventStore');
 
 /**
  * Get quantity from request
@@ -32,7 +32,7 @@ let generateStockEvent = (eventName, productId, quantity, callback) => {
         quantity: quantity
     };
     
-    Repository.saveStockEvent(stockEvent, (err, data) => {
+    EventStore.save(stockEvent, (err, data) => {
         if (err) callback(null, { statusCode: 500 });
         else callback(null, { statusCode: 202, body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}});
     });

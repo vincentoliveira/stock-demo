@@ -1,6 +1,6 @@
 'use strict';
 
-const Repository = require('./repository');
+const StockRepository = require('./StockRepository');
 
 let updateReadModel = (event) => {
 
@@ -10,7 +10,7 @@ let updateReadModel = (event) => {
     let inQuantity = type === 'ProductReceived' ? quantity : 0;
     let outQuantity = type === 'ProductConsumed' ? quantity : 0;
 
-    Repository.getStockModel(productId, (err, item) => {
+    StockRepository.getStock(productId, (err, item) => {
 
         if (err) {
             console.error(err);
@@ -31,7 +31,7 @@ let updateReadModel = (event) => {
         }
 
 
-        Repository.saveStockModel(item, (err, item) => {
+        StockRepository.saveStock(item, (err, item) => {
             if (err) console.error(err);
         });
     });
