@@ -4,6 +4,9 @@ const Dynamo = require('./dynamo');
 
 const modelTableName = process.env.MODEL_TABLE;
 
+/**
+ * Get a Stock Read Model.
+ */
 exports.getStock = (productId, callback) => {
 
     let getParams = {
@@ -20,6 +23,9 @@ exports.getStock = (productId, callback) => {
     });
 };
 
+/**
+ * Save a Stock Read Model.
+ */
 exports.saveStock = (stockModel, callback) => {
 
     let putParams = {

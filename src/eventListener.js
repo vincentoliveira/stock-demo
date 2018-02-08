@@ -2,7 +2,10 @@
 
 const StockRepository = require('./StockRepository');
 
-let updateReadModel = (event) => {
+/**
+ * Apply Stock Event to update Stock Read Model
+ */
+let applyEvent = (event) => {
 
     let productId = parseInt(event.productId.N);
     let quantity = parseInt(event.quantity.N);
@@ -30,15 +33,16 @@ let updateReadModel = (event) => {
             item.out += outQuantity;
         }
 
-
         StockRepository.saveStock(item, (err, item) => {
             if (err) console.error(err);
         });
     });
 };
 
+/**
+ * Stock event listener (streamer) lambda function
+ */
 exports.listener = (event, context, callback) => {
-
 
     if (!event.Records) {
         return;
@@ -51,6 +55,6 @@ exports.listener = (event, context, callback) => {
             return;
         }
 
-        updateReadModel(Image);
+        applyEvent(Image);
     });
 };

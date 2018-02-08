@@ -4,6 +4,9 @@ const Dynamo = require('./dynamo');
 
 const eventTableName = process.env.EVENT_TABLE;
 
+/**
+ * Save a Stock event.
+ */
 exports.save = (stockEvent, callback) => {
 
     let params = {
